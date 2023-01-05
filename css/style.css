@@ -1,0 +1,69 @@
+.suggestion-tag {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.suggestion-tag li {
+
+    background-color: #28a745;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.toggle-suggestion-text {
+    display: none;
+}
+
+.phone-input {
+
+    border: 1px solid #007bff;
+    display: flex;
+}
+
+.phone-input input[type='text'] {
+    width: 100%;
+    outline: 0;
+    border: 0;
+}
+
+.all-tags {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+}
+
+.all-tags li {
+    font-weight: bold;
+    background: #007bff;
+    margin-right: 10px;
+    border-radius: 5px;
+    padding: 5px 20px 5px 5px;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+
+}
+
+.all-tags li span {
+
+    margin-left: 10px;
+    font-weight: normal;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+}
+
+.phone-list {
+
+    display: none;
+}
+
+#errorMessage {
+    color: red;
+}
