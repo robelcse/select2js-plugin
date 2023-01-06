@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
-     //add click event listener
+    //add click event listener
     suggestionTag.addEventListener("click", function (event) {
         inputData();
     })
@@ -49,14 +49,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function inputData() {
 
+        let stringOfPhone         = inputValue;
+        let splitedArr            = stringOfPhone.split(",");
+            splitedArr            = trimSplitedArrayElement(splitedArr);
+        let validateArrayElements = validateArrayElement(splitedArr);
+
+        if (!validateArrayElements) {
+            errorMessage.innerText = "input containt invalid character!";
+            console.log("input containt invalid character!");
+
+            setTimeout(() => {
+                errorMessage.innerText = "";
+            }, 5000);
+            return false;
+        }
+
+        let checkLengthofArrayElements = checkLengthofArrayElement(splitedArr);
+
+        if (!checkLengthofArrayElements) {
+            console.log("invalid lenght of number");
+            errorMessage.innerText = "invalid lenght of number, each number length must be between 9-14 character!";
+            setTimeout(() => {
+                errorMessage.innerText = "";
+            }, 5000);
+            return false;
+        }
+
+        pushDataintoArrofPhone(splitedArr);
+
         phone.value = "";
-        let stringOfPhone = inputValue;
         suggestionText.innerHTML = "";
         suggestionTag.classList.add("toggle-suggestion-text");
-
-        let splitedArr = stringOfPhone.split(",");
-        splitedArr = trimSplitedArrayElement(splitedArr);
-        pushDataintoArrofPhone(splitedArr);
         showElementOfArray();
     }
 
@@ -99,43 +122,9 @@ document.addEventListener('DOMContentLoaded', function () {
     //push data into array arrayOfPhone
     function pushDataintoArrofPhone(splitedArr) {
 
-        let arr = [];
-        let invalidNumberCounter = 0;
-
-
-        let validatedPhone = validateArrayElement(splitedArr);
-
-        if (validatedPhone > 0) {
-            phone.value = inputValue;
-            console.log('Your input contain invalid phone!')
-            errorMessage.innerText = 'Your input contain invalid phone!';
-
-            setTimeout(() => {
-                errorMessage.innerText = '';
-            }, 4000);
-        } else {
-            splitedArr.forEach((value) => {
-                if (value.length > 14 || value.length < 8) {
-                    invalidNumberCounter++;
-                }
-                arr.push(value);
-            })
-
-        }
-
-        if (invalidNumberCounter === 0) {
-            arrOfPhone = [...arr];
-        } else {
-            phone.value = inputValue;
-            console.log('Phone number must be between 9-14 character!')
-            errorMessage.innerText = 'Phone number must be between 9-14 character!';
-
-            setTimeout(() => {
-                errorMessage.innerText = '';
-            }, 4000);
-        }
-
-
+        splitedArr.forEach((value) => {
+            arrOfPhone.push(value);
+        })
     }
 
     //validate single phone number
@@ -149,7 +138,26 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
 
-        return invalidCounter;
+
+        if (invalidCounter > 0) {
+            return false;
+        }
+        return true;
+    }
+
+    //check lenght of array elements
+    function checkLengthofArrayElement(splitedArr) {
+        let invalidCounter = 0;
+        splitedArr.forEach((value) => {
+            if (value.length > 14 || value.length < 8) {
+                invalidCounter++
+            }
+        })
+
+        if (invalidCounter > 0) {
+            return false;
+        }
+        return true;
     }
 
     //add event for remove element from input
